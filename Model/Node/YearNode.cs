@@ -14,7 +14,6 @@ namespace DigitalWallet.Model.Node
         public YearNode(int year)
         {
             Year = year;
-            Amount = 0;
             TransactionsByMonthBegin = null;
             NextYear = null;
         }
@@ -23,11 +22,6 @@ namespace DigitalWallet.Model.Node
         /// Отслеживаемый год.
         /// </summary>
         public int Year { get; }
-
-        /// <summary>
-        /// Годовая сумма транзакций.
-        /// </summary>
-        public double Amount { get; private set; }
 
         /// <summary>
         /// Начало списка транзакций по месяцам для данного года.

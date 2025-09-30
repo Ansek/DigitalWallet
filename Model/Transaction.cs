@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Xml.Linq;
 
 namespace DigitalWallet.Model
 {
@@ -50,5 +52,20 @@ namespace DigitalWallet.Model
         /// Описание.
         /// </summary>
         public string Description { get; }
+
+        /// <summary>
+        /// Переопределение оператора сложения для суммирования
+        /// поля Amount с учетом поля Type.
+        /// </summary>
+        /// <param name="d">Первое слагаемое.</param>
+        /// <param name="t">Транзакция с полем Amount.</param>
+        /// <returns>Сумма первого слагаемого и значения поля Amount.</returns>
+        public static double operator +(double d, Transaction t)
+        {
+            if (t.Type == TransactionType.Income)
+                return d + t.Amount;
+            else
+                return d - t.Amount;
+        }
     }
 }

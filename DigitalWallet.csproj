@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AddTransactionException.cs" />
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Node\MonthNode.cs" />
     <Compile Include="Model\Node\TransactionNode.cs" />

@@ -12,7 +12,6 @@
         public MonthNode(int month)
         {
             Month = month;
-            Amount = 0;
             TransactionsBegin = null;
             NextMonth = null;
         }
@@ -21,11 +20,6 @@
         /// Отслеживаемый месяц.
         /// </summary>
         public int Month { get; }
-
-        /// <summary>
-        /// Месячная сумма транзакций.
-        /// </summary>
-        public double Amount { get; private set; }
 
         /// <summary>
         /// Начало списка транзакций для данного месяца.
