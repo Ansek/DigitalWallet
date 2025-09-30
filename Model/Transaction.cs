@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Xml.Linq;
 
 namespace DigitalWallet.Model
 {

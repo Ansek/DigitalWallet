@@ -1,7 +1,6 @@
-﻿using DigitalWallet.Model.Node;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
+using DigitalWallet.Model.Node;
 
 namespace DigitalWallet.Model
 {
@@ -243,12 +242,12 @@ namespace DigitalWallet.Model
             YearNode yNode = _transactionsByYearBegin;
             while (yNode != null && yNode.Year != year)
                 yNode = yNode.NextYear;
-            if (yNode == null)
+            if (yNode != null)
             {
                 MonthNode mNode = yNode.TransactionsByMonthBegin;
-                while (mNode != null)
+                while (mNode != null && mNode.Month != month)
                     mNode = mNode.NextMonth;
-                if (mNode == null && mNode.Month != month)
+                if (mNode != null)
                 {
                     var node = mNode.TransactionsBegin;
                     while (node != null)

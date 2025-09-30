@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace DigitalWallet.Model.Node
+﻿namespace DigitalWallet.Model.Node
 {
     /// <summary>
     /// Узел для списка транзакций по годам.
