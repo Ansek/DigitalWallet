@@ -15,8 +15,10 @@ namespace DigitalWallet.Model
         /// <param name="amount">Сумма.</param>
         /// <param name="type">Тип.</param>
         /// <param name="description">Описание.</param>
-        public Transaction(int id, DateTime date, float amount, TransactionType type, string description)
+        public Transaction(ulong id, DateTime date, double amount, TransactionType type, string description)
         {
+            if (amount <= 0)
+                throw new ArgumentException("Сумма должна быть положительным значением.");
             ID = id;
             Date = date;
             Amount = amount;
@@ -27,7 +29,7 @@ namespace DigitalWallet.Model
         /// <summary>
         /// Идентификатор.
         /// </summary>
-        public int ID { get; }
+        public ulong ID { get; }
 
         /// <summary>
         /// Дата и время выполнения.
@@ -37,7 +39,7 @@ namespace DigitalWallet.Model
         /// <summary>
         /// Сумма.
         /// </summary>
-        public float Amount { get; }
+        public double Amount { get; }
 
         /// <summary>
         /// Тип.

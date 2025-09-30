@@ -1,4 +1,6 @@
-﻿namespace DigitalWallet.Model
+﻿using System;
+
+namespace DigitalWallet.Model
 {
     /// <summary>
     /// Кошелек.
@@ -12,8 +14,10 @@
         /// <param name="name">Название.</param>
         /// <param name="currency">Валюта.</param>
         /// <param name="openingBalance">Начальный баланс.</param>
-        public Wallet(int id, string name, Currency currency, double openingBalance)
+        public Wallet(ulong id, string name, Currency currency, double openingBalance)
         {
+            if (openingBalance < 0)
+                throw new ArgumentException("Баланс должен быть равен или больше 0.");
             ID = id;
             Name = name;
             Currency = currency;
@@ -23,7 +27,7 @@
         /// <summary>
         /// Идентификатор.
         /// </summary>
-        public int ID { get; }
+        public ulong ID { get; }
 
         /// <summary>
         /// Название.
