@@ -59,6 +59,27 @@ namespace DigitalWallet.Model
 
 
         /// <summary>
+        /// Текущий баланс.
+        /// </summary>
+        public double Balance => SumAmount();
+
+        /// <summary>
+        /// Суммирирует значения полей Amount всех транзакций кошелька.
+        /// </summary>
+        /// <returns>Сумма полей Amount.</returns>
+        private double SumAmount()
+        {
+            double sum = OpeningBalance;
+            var node = _transactionsSortedByDateBegin;
+            while (node != null)
+            {
+                sum += node.Transaction;
+                node = node.Next;
+            }
+            return sum;
+        }
+
+        /// <summary>
         /// Добавляет транзакцию в общий отсортированный список.
         /// Выбрасывает исключение в случае несоответствия данных.
         /// </summary>
@@ -82,8 +103,6 @@ namespace DigitalWallet.Model
                     var msg = $"Идентифактор транзакции (ID = {transaction.ID}) уже был задан ранее.";
                     throw new AddTransactionException(AddTransactionException.Type.RepeatID, msg);
                 }
-                // 3
-                // 5 4 2 1
                 if (node.Transaction.Date > transaction.Date)
                 {
                     prev = node;
@@ -112,15 +131,19 @@ namespace DigitalWallet.Model
             }
             if (prev == null)
             {
-                node = new TransactionNode(transaction);
-                node.Next = _transactionsSortedByDateBegin;
+                node = new TransactionNode(transaction)
+                {
+                    Next = _transactionsSortedByDateBegin
+                };
                 _transactionsSortedByDateBegin = node;
             } 
             else
             {
                 node = prev.Next;
-                prev.Next = new TransactionNode(transaction);
-                prev.Next.Next = node;
+                prev.Next = new TransactionNode(transaction)
+                {
+                    Next = node
+                };
             }
         }
 
@@ -218,10 +241,14 @@ namespace DigitalWallet.Model
         public IEnumerable<Transaction> GetTransactionsByYearMonth(int year, int month)
         {
             YearNode yNode = _transactionsByYearBegin;
-            while (yNode != null)
+            while (yNode != null && yNode.Year != year)
+                yNode = yNode.NextYear;
+            if (yNode == null)
             {
                 MonthNode mNode = yNode.TransactionsByMonthBegin;
                 while (mNode != null)
+                    mNode = mNode.NextMonth;
+                if (mNode == null && mNode.Month != month)
                 {
                     var node = mNode.TransactionsBegin;
                     while (node != null)
@@ -229,9 +256,7 @@ namespace DigitalWallet.Model
                         yield return node.Transaction;
                         node = node.Next;
                     }
-                    mNode = mNode.NextMonth;
                 }
-                yNode = yNode.NextYear;
             }
         }
     }

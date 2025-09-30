@@ -11,7 +11,11 @@ namespace DigitalWallet.Model
         /// Идентификатор типа исключения.
         /// </summary>
         public enum Type
-        { 
+        {
+            /// <summary>
+            /// Тип не задан.
+            /// </summary>
+            None,
             /// <summary>
             /// Найден такой же идентификатор.
             /// </summary>
