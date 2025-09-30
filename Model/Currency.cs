@@ -27,7 +27,7 @@ namespace DigitalWallet.Model
         /// <returns></returns>
         private bool IsUpperLatin(string str)
         {
-            foreach(char c in str)
+            foreach (char c in str)
                 if (c < 'A' || 'Z' < c)
                     return false;
             return true;
