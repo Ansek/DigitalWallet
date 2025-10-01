@@ -22,7 +22,7 @@ namespace DigitalWallet.Tests
                 new DateTime(2016, 05, 03),
                 new DateTime(2018, 05, 04),
                 new DateTime(2020, 01, 05),
-                new DateTime(2020, 10, 06),
+                new DateTime(2020, 10, 06)
             ];
             var wallet = new Wallet(0, "Teстовый", new Currency("RUB", "Рубли"), 0);
             for (int i = 0; i < dates1.Count; i++)
@@ -66,7 +66,7 @@ namespace DigitalWallet.Tests
                 new DateTime(2020, 10, 10),
                 new DateTime(2020, 10, 02),
                 new DateTime(2020, 10, 02, 15, 0, 0),
-                new DateTime(2020, 10, 02, 10, 0, 0),
+                new DateTime(2020, 10, 02, 10, 0, 0)
             ];
             var wallet = new Wallet(0, "Teстовый", new Currency("RUB", "Рубли"), 0);
             for (int i = 0; i < dates1.Count; i++)
@@ -160,7 +160,7 @@ namespace DigitalWallet.Tests
             {
                 wallet.AddTransaction(new Transaction(2, new DateTime(2025, 09, 01), 100, TransactionType.Expense, "Расход"));
             });
-            
+
             // Assert
             Assert.Equal(AddTransactionException.Type.PrevDateSumErr, exc.Code);
         }
@@ -195,7 +195,7 @@ namespace DigitalWallet.Tests
         /// - в каждой группе отсортировать транзакции по дате (от самых старых к самым новым).
         /// </summary>
         [Fact]
-        public void GetTransactionsByYearMonth_CorrectTransactionsOrder()
+        public void GetTransactionsByFilter_CorrectTransactionsOrder()
         {
             // Arrange
             var data1 = new List<Tuple<ulong, TransactionType, double, DateTime>>()
@@ -207,17 +207,15 @@ namespace DigitalWallet.Tests
                 new(5, TransactionType.Income, 400, new DateTime(2025, 01, 01)),
                 new(6, TransactionType.Expense, 300, new DateTime(2025, 01, 02)),
                 new(7, TransactionType.Income, 400, new DateTime(2025, 01, 01)),
-                new(8, TransactionType.Expense, 300, new DateTime(2025, 01, 01)),
+                new(8, TransactionType.Expense, 300, new DateTime(2025, 01, 01))
             };
             var wallet = new Wallet(0, "Teстовый", new Currency("RUB", "Рубли"), 0);
             foreach (var (id, type, amount, date) in data1)
-            {
                 wallet.AddTransaction(new Transaction(id, date, amount, type, ""));
-            }
 
             // Act
             var data2 = new List<Tuple<ulong, TransactionType, double, DateTime>>();
-            foreach (var transaction in wallet.GetTransactionsByYearMonth(2025, 01))
+            foreach (var transaction in wallet.GetTransactionsByFilter(2025, 01))
                 data2.Add(new(transaction.ID, transaction.Type, transaction.Amount, transaction.Date));
 
             // Assert
@@ -230,7 +228,44 @@ namespace DigitalWallet.Tests
                 new(8, TransactionType.Expense, 300, new DateTime(2025, 01, 01)),
                 new(6, TransactionType.Expense, 300, new DateTime(2025, 01, 02)),
                 new(4, TransactionType.Expense, 300, new DateTime(2025, 01, 03)),
-                new(2, TransactionType.Expense, 100, new DateTime(2025, 01, 01))               
+                new(2, TransactionType.Expense, 100, new DateTime(2025, 01, 01))
+            };
+            Assert.Equal(data3, data2);
+        }
+
+        /// <summary>
+        /// Проверяется корректное распложение транзакций: 
+        /// 3 самые большие траты за указанный месяц для каждого кошелька,
+        /// отсортированные по убыванию суммы.
+        /// </summary>
+        [Fact]
+        public void GetTransactionsByFilter_CorrectThreeExpenseTransactionsOrder()
+        {
+            // Arrange
+            var data1 = new List<Tuple<ulong, TransactionType, double, DateTime>>()
+            {
+                new(1, TransactionType.Expense, 100, new DateTime(2025, 01, 01)),
+                new(2, TransactionType.Expense, 200, new DateTime(2025, 01, 01)),
+                new(3, TransactionType.Income, 500, new DateTime(2025, 01, 02)),
+                new(4, TransactionType.Expense, 400, new DateTime(2025, 01, 02)),
+                new(5, TransactionType.Income, 600, new DateTime(2025, 01, 03)),
+                new(6, TransactionType.Expense, 300, new DateTime(2025, 01, 03))
+            };
+            var wallet = new Wallet(0, "Teстовый", new Currency("RUB", "Рубли"), 1000);
+            foreach (var (id, type, amount, date) in data1)
+                wallet.AddTransaction(new Transaction(id, date, amount, type, ""));
+
+            // Act
+            var data2 = new List<Tuple<ulong, TransactionType, double, DateTime>>();
+            foreach (var transaction in wallet.GetTransactionsByFilter(2025, 01, TransactionType.Expense, 3))
+                data2.Add(new(transaction.ID, transaction.Type, transaction.Amount, transaction.Date));
+
+            // Assert
+            var data3 = new List<Tuple<ulong, TransactionType, double, DateTime>>()
+            {
+                new(4, TransactionType.Expense, 400, new DateTime(2025, 01, 02)),
+                new(6, TransactionType.Expense, 300, new DateTime(2025, 01, 03)),
+                new(2, TransactionType.Expense, 200, new DateTime(2025, 01, 01))
             };
             Assert.Equal(data3, data2);
         }

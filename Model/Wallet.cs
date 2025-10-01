@@ -237,7 +237,7 @@ namespace DigitalWallet.Model
         /// <param name="year">Отслеживаемый год.</param>
         /// <param name="month">Отслеживаемый месяц.</param>
         /// <returns>Перечисление объектов <see cref="Transaction"/>.</returns>
-        public IEnumerable<Transaction> GetTransactionsByYearMonth(int year, int month)
+        public IEnumerable<Transaction> GetTransactionsByFilter(int year, int month)
         {
             YearNode yNode = _transactionsByYearBegin;
             while (yNode != null && yNode.Year != year)
@@ -256,6 +256,29 @@ namespace DigitalWallet.Model
                         node = node.Next;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Возращает ограниченное количество транзакции по типу для конкретного года и месяца.
+        /// </summary>
+        /// <param name="year">Отслеживаемый год.</param>
+        /// <param name="month">Отслеживаемый месяц.</param>
+        /// <param name="type">Тип транзакции (доход/расход).</param>
+        /// <param name="maxCount">Максимальное количество записей.</param>
+        /// <returns>Перечисление объектов <see cref="Transaction"/>.</returns>
+        public IEnumerable<Transaction> GetTransactionsByFilter(int year, int month, TransactionType type, int maxCount)
+        {
+            int count = 0;
+            foreach (var transaction in GetTransactionsByFilter(year, month))
+            {
+                if (transaction.Type == type)
+                {
+                    yield return transaction;
+                    count++;
+                }
+                if (count >= maxCount)
+                    break;
             }
         }
     }
