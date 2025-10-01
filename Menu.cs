@@ -73,7 +73,7 @@ namespace DigitalWallet
                             ShowTransactionsByMonth();
                             break;
                         case 4:
-                            //ShowBiggestExpensesInMonth();
+                            ShowBiggestExpensesInMonth();
                             break;
                         case 5:
                             _selectedWallet = null;
@@ -102,7 +102,7 @@ namespace DigitalWallet
                             SelectWallet();
                             break;
                         case 3:
-                            //ShowBiggestExpensesInMonthForAllWallets();
+                            ShowBiggestExpensesInMonthForAllWallets();
                             break;
                         case 4:
                             _data.Save();
@@ -152,7 +152,7 @@ namespace DigitalWallet
         /// Выводит информацию о транзакции в консоль.
         /// </summary>
         /// <param name="transaction"></param>
-        private void PrintTransaction(Transaction transaction)
+        private void PrintTransaction(Transaction transaction, Currency currency)
         {
             Console.Write($"ID={transaction.ID, -7}");
 
@@ -163,7 +163,7 @@ namespace DigitalWallet
             else
                 Console.Write("?      ");
 
-            Console.WriteLine($"{transaction.Amount, 12} {_selectedWallet.Currency.Code} {transaction.Date, 12} | {transaction.Description}.");
+            Console.WriteLine($"{transaction.Amount, 12} {currency.Code} {transaction.Date, 12} | {transaction.Description}.");
         }
 
         /// <summary>
@@ -179,9 +179,9 @@ namespace DigitalWallet
                 Console.WriteLine($"Начальный баланс: {_selectedWallet.OpeningBalance}.");
                 Console.WriteLine($"Текущий баланс: {_selectedWallet.Balance}.\n");
 
-                Console.WriteLine("Результат поиска:");
+                Console.WriteLine("\nРезультат поиска:");
                 foreach (var transaction in transactions)
-                    PrintTransaction(transaction);
+                    PrintTransaction(transaction, _selectedWallet.Currency);
 
                 Console.Write("\nПродолжить...");
                 Console.ReadLine();
@@ -206,10 +206,10 @@ namespace DigitalWallet
                 if (!TryUntilMonthSelected(out DateTime date, dates))
                     return;
 
-                Console.WriteLine("Результат поиска:");
+                Console.WriteLine("\nРезультат поиска:");
                 var transactions = _selectedWallet.GetTransactionsByFilter(date.Year, date.Month);
                 foreach (var transaction in transactions)
-                    PrintTransaction(transaction);
+                    PrintTransaction(transaction, _selectedWallet.Currency);
 
                 Console.Write("\nПродолжить...");
                 Console.ReadLine();
@@ -225,7 +225,30 @@ namespace DigitalWallet
         /// </summary>
         private void ShowBiggestExpensesInMonth()
         {
+            var dates = new List<DateTime>(_selectedWallet.GetYearMonthOfTransactions());
+            if (dates.Count > 0)
+            {
+                Console.Clear();
+                Console.WriteLine($"Самые большие траты за указанный месяц (до 3-х записей) для кошелька ID{_selectedWallet.ID} {_selectedWallet.Name}.");
 
+                if (!TryUntilMonthSelected(out DateTime date, dates))
+                    return;
+
+                Console.WriteLine("\nРезультат поиска:");
+                var transactions = _selectedWallet.GetTransactionsByFilter(date.Year, date.Month, TransactionType.Expense, 3);
+                foreach (var transaction in transactions)
+                    PrintTransaction(transaction, _selectedWallet.Currency);
+
+                if (transactions.Count() == 0)
+                    Console.WriteLine("Расходы не найдены.");
+
+                Console.Write("\nПродолжить...");
+                Console.ReadLine();
+            }
+            else
+            {
+                _resultMessage = "Транзакции не найдены. Требуется создание хотя бы одной транзакции.";
+            }
         }
 
         /// <summary>
@@ -291,7 +314,40 @@ namespace DigitalWallet
         /// </summary>
         private void ShowBiggestExpensesInMonthForAllWallets()
         {
+            if (_data.Wallets.Count > 0)
+            {
+                Console.Clear();
+                Console.WriteLine("Список кошельков с отображением самых больших трат за указанный месяц (до 3-х записей).");
+                Console.WriteLine("Заполните данные (пустая строка - отмена операции):");
+                if (TryUntilDataRead("Год: ", out int year) &&
+                    TryUntilDataRead("Месяц: ", out int month))
+                {
+                    Console.WriteLine("\nРезультат поиска:");
+                    foreach (var wallet in _data.Wallets)
+                    {
+                        Console.WriteLine($"Кошелёк ID={wallet.ID}. {wallet.Name}.");
 
+                        var transactions = wallet.GetTransactionsByFilter(year, month, TransactionType.Expense, 3);
+                        foreach (var transaction in transactions)
+                        {
+                            Console.Write(" - ");
+                            PrintTransaction(transaction, wallet.Currency);
+                        }                            
+
+                        if (transactions.Count() == 0)
+                            Console.WriteLine("Расходы не найдены.");
+
+                        Console.WriteLine();
+                    }
+                }
+
+                Console.Write("\nПродолжить...");
+                Console.ReadLine();
+            }
+            else
+            {
+                _resultMessage = "Кошельки не найдены. Требуется создание хотя бы одного кошелька.";
+            }
         }
 
         /// <summary>
