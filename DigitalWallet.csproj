@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSet.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Model\AddTransactionException.cs" />
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Node\MonthNode.cs" />

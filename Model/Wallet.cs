@@ -5,7 +5,7 @@ using DigitalWallet.Model.Node;
 namespace DigitalWallet.Model
 {
     /// <summary>
-    /// Кошелек.
+    /// Кошелёк.
     /// </summary>
     public class Wallet
     {
@@ -20,7 +20,7 @@ namespace DigitalWallet.Model
         private YearNode _transactionsByYearBegin = null;
 
         /// <summary>
-        /// Кошелек.
+        /// Кошелёк.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <param name="name">Название.</param>
