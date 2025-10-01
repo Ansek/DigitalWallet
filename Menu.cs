@@ -89,7 +89,7 @@ namespace DigitalWallet
                     Console.WriteLine("1. Создать кошелёк.");
                     Console.WriteLine("2. Выбрать кошелёк.");
                     Console.WriteLine("3. Отчет о наибольших тратах за месяц для всех кошельков.");
-                    Console.WriteLine("4. Выход (сохранение данных)");
+                    Console.WriteLine("4. Выход (сохранение данных).");
 
                     TryUntilDataRead("Выбрать пункт > ", out int cmd);
 
