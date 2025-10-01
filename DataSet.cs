@@ -35,6 +35,11 @@ namespace DigitalWallet
         public IReadOnlyList<Currency> Currencies => _currencies;
 
         /// <summary>
+        /// Значение последнего идентифекатора транзакции.
+        /// </summary>
+        public ulong _lastTransactionID = 0;
+
+        /// <summary>
         /// Хранит данные программы.
         /// </summary>
         public DataSet()
@@ -78,6 +83,24 @@ namespace DigitalWallet
                 if (wallet.ID == id)
                     return wallet;
             return null;
+        }
+
+
+        /// <summary>
+        /// Создает и добавляет транзакцию в кошелёк.
+        /// </summary>
+        /// <param name="wallet">Кошелёк для добавления транзакции.</param>
+        /// <param name="date">Дата и время выполнения транзакции.</param>
+        /// <param name="amount">Сумма транзакции.</param>
+        /// <param name="type">Тип транзакции.</param>
+        /// <param name="description">Описание транзакции.</param>
+        /// <returns>Идентификатор транзакции.</returns>
+        public ulong AddTransaction(Wallet wallet, DateTime date, double amount, TransactionType type, string description)
+        {
+            _lastTransactionID++;
+            var transaction = new Transaction(_lastTransactionID, date, amount, type, description);
+            wallet.AddTransaction(transaction);
+            return transaction.ID;
         }
     }
 }
