@@ -89,7 +89,7 @@ namespace DigitalWallet
                     Console.WriteLine("1. Создать кошелёк.");
                     Console.WriteLine("2. Выбрать кошелёк.");
                     Console.WriteLine("3. Отчет о наибольших тратах за месяц для всех кошельков.");
-                    Console.WriteLine("4. Выход");
+                    Console.WriteLine("4. Выход (сохранение данных)");
 
                     TryUntilDataRead("Выбрать пункт > ", out int cmd);
 
@@ -105,6 +105,7 @@ namespace DigitalWallet
                             //ShowBiggestExpensesInMonthForAllWallets();
                             break;
                         case 4:
+                            _data.Save();
                             return;
                         default:
                             Console.WriteLine("Ошибка выбора.");
@@ -427,13 +428,13 @@ namespace DigitalWallet
             for (int i = 0; i < dates.Count; i++)
                 Console.WriteLine($"{i + 1}. {dates[i]:MMMM yyyy}");
 
-            int choice;
             while (true)
             {
-                if (!TryUntilDataRead("Выбрать пункт > ", out choice))
+                if (!TryUntilDataRead("Выбрать пункт > ", out int choice))
                 {
                     _resultMessage = "Отмена операции (просмотр транзакции за месяц).";
                     date = default;
+                    return false;
                 }
                 if (choice < 1 || dates.Count < choice)
                 {

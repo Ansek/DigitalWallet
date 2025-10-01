@@ -15,6 +15,16 @@ namespace DigitalWallet
         private const int MAX_RANDOM_ID = 1000;
 
         /// <summary>
+        /// Имя файла для сохранения информации в json-файл.
+        /// </summary>
+        private const string JSON_FILE_NAME = "data.json";
+
+        /// <summary>
+        /// Объект для загрузки и сохранения информации в файл json.
+        /// </summary>
+        private readonly JSONManager _jsonManager;
+
+        /// <summary>
         /// Список кошельков.
         /// </summary>
         private readonly List<Wallet> _wallets;
@@ -44,14 +54,20 @@ namespace DigitalWallet
         /// </summary>
         public DataSet()
         {
-            _wallets = new List<Wallet>();
+            _jsonManager = new JSONManager(JSON_FILE_NAME);
             _currencies = new List<Currency>()
             {
                 new Currency("RUB", "Рубль"),
                 new Currency("USD", "Доллар"),
                 new Currency("EUR", "Евро")
             };
+            _wallets = _jsonManager.Load(_currencies);
         }
+
+        /// <summary>
+        /// Сохранение данных в файл.
+        /// </summary>
+        public void Save() => _jsonManager.Save(_wallets);
 
         /// <summary>
         /// Создает и добавляет кошелёк в список.
