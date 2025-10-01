@@ -15,8 +15,10 @@ namespace DigitalWallet.Model
         /// <param name="amount">Сумма.</param>
         /// <param name="type">Тип.</param>
         /// <param name="description">Описание.</param>
-        public Transaction(int id, DateTime date, float amount, TransactionType type, string description)
+        public Transaction(ulong id, DateTime date, double amount, TransactionType type, string description)
         {
+            if (amount <= 0)
+                throw new ArgumentException("Сумма должна быть положительным значением.");
             ID = id;
             Date = date;
             Amount = amount;
@@ -27,7 +29,7 @@ namespace DigitalWallet.Model
         /// <summary>
         /// Идентификатор.
         /// </summary>
-        public int ID { get; }
+        public ulong ID { get; }
 
         /// <summary>
         /// Дата и время выполнения.
@@ -37,7 +39,7 @@ namespace DigitalWallet.Model
         /// <summary>
         /// Сумма.
         /// </summary>
-        public float Amount { get; }
+        public double Amount { get; }
 
         /// <summary>
         /// Тип.
@@ -48,5 +50,20 @@ namespace DigitalWallet.Model
         /// Описание.
         /// </summary>
         public string Description { get; }
+
+        /// <summary>
+        /// Переопределение оператора сложения для суммирования
+        /// поля Amount с учетом поля Type.
+        /// </summary>
+        /// <param name="d">Первое слагаемое.</param>
+        /// <param name="t">Транзакция с полем Amount.</param>
+        /// <returns>Сумма первого слагаемого и значения поля Amount.</returns>
+        public static double operator +(double d, Transaction t)
+        {
+            if (t.Type == TransactionType.Income)
+                return d + t.Amount;
+            else
+                return d - t.Amount;
+        }
     }
 }
