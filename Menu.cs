@@ -157,7 +157,7 @@ namespace DigitalWallet
         /// <param name="transaction"></param>
         private void PrintTransaction(Transaction transaction, Currency currency)
         {
-            Console.Write($"ID={transaction.ID, -7}");
+            Console.Write($"ID={transaction.ID, -7} | ");
 
             if (transaction.Type == TransactionType.Income)
                 Console.Write("Доход  ");
@@ -166,7 +166,8 @@ namespace DigitalWallet
             else
                 Console.Write("?      ");
 
-            Console.WriteLine($"{transaction.Amount, 12} {currency.Code} {transaction.Date, 12} | {transaction.Description}.");
+            var date = transaction.Date.ToString("d MMMM yyyy HH:mm:ss");
+            Console.WriteLine($" | {transaction.Amount, 12} {currency.Code} | {date, 24} | {transaction.Description}.");
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace DigitalWallet
                 Console.Clear();
                 Console.WriteLine($"Просмотр всех транзакции кошелька ID{_selectedWallet.ID} {_selectedWallet.Name}.");
                 Console.WriteLine($"Начальный баланс: {_selectedWallet.OpeningBalance}.");
-                Console.WriteLine($"Текущий баланс: {_selectedWallet.Balance}.\n");
+                Console.WriteLine($"Текущий баланс: {_selectedWallet.Balance}.");
 
                 Console.WriteLine("\nРезультат поиска:");
                 foreach (var transaction in transactions)
@@ -323,7 +324,7 @@ namespace DigitalWallet
                 Console.WriteLine("Список кошельков с отображением самых больших трат за указанный месяц (до 3-х записей).");
                 Console.WriteLine("Заполните данные (пустая строка - отмена операции):");
                 if (TryUntilDataRead("Год: ", out int year) &&
-                    TryUntilDataRead("Месяц: ", out int month))
+                    TryUntilDataRead("Номер месяца: ", out int month))
                 {
                     Console.WriteLine("\nРезультат поиска:");
                     foreach (var wallet in _data.Wallets)
