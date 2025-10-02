@@ -88,6 +88,11 @@ namespace DigitalWallet.Model
         {
             if (_transactionsSortedByDateBegin == null)
             {
+                if (OpeningBalance + transaction < 0)
+                {
+                    var msg = $"Первое списание {transaction.Amount} превышает начальный баланс {OpeningBalance}.";
+                    throw new AddTransactionException(AddTransactionException.Type.NextDateSumErr, msg);
+                }
                 _transactionsSortedByDateBegin = new TransactionNode(transaction);
                 return;
             }
