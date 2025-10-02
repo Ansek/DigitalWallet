@@ -1,0 +1,253 @@
+{
+  "wallets": [
+    {
+      "id": 286,
+      "name": "Российский счёт",
+      "currency": "RUB",
+      "openingBalance": 2000,
+      "transactions": [
+        {
+          "id": 18,
+          "date": "2025-02-05T09:00:00",
+          "amount": 1000,
+          "isIncome": false,
+          "description": "Проездной"
+        },
+        {
+          "id": 17,
+          "date": "2025-02-01T17:00:00",
+          "amount": 5000,
+          "isIncome": false,
+          "description": "Кварплата"
+        },
+        {
+          "id": 16,
+          "date": "2025-02-01T15:00:00",
+          "amount": 27000,
+          "isIncome": true,
+          "description": "Зарплата"
+        },
+        {
+          "id": 15,
+          "date": "2025-01-01T20:00:00",
+          "amount": 5000,
+          "isIncome": false,
+          "description": "Кварплата"
+        },
+        {
+          "id": 14,
+          "date": "2025-01-01T15:00:00",
+          "amount": 27000,
+          "isIncome": true,
+          "description": "Зарплата"
+        },
+
+        {
+          "id": 13,
+          "date": "2024-12-28T19:00:00",
+          "amount": 2000,
+          "isIncome": false,
+          "description": "Аптека"
+        },        
+        {
+          "id": 12,
+          "date": "2024-12-28T17:00:00",
+          "amount": 2500,
+          "isIncome": false,
+          "description": "Магазин"
+        },
+        {
+          "id": 11,
+          "date": "2024-12-21T18:00:00",
+          "amount": 2000,
+          "isIncome": false,
+          "description": "Аптека"
+        },        
+        {
+          "id": 10,
+          "date": "2024-12-21T17:00:00",
+          "amount": 4500,
+          "isIncome": false,
+          "description": "Магазин"
+        },
+        {
+          "id": 9,
+          "date": "2024-12-20T12:00:00",
+          "amount": 3000,
+          "isIncome": true,
+          "description": "Премия 2"
+        },
+        {
+          "id": 8,
+          "date": "2024-12-14T20:00:00",
+          "amount": 2000,
+          "isIncome": false,
+          "description": "Аптека"
+        },        
+        {
+          "id": 7,
+          "date": "2024-12-14T18:00:00",
+          "amount": 3500,
+          "isIncome": false,
+          "description": "Магазин"
+        },
+        {
+          "id": 6,
+          "date": "2024-12-10T12:00:00",
+          "amount": 3000,
+          "isIncome": true,
+          "description": "Премия 1"
+        },
+        {
+          "id": 5,
+          "date": "2024-12-07T19:00:00",
+          "amount": 2000,
+          "isIncome": false,
+          "description": "Аптека"
+        },        
+        {
+          "id": 4,
+          "date": "2024-12-07T18:00:00",
+          "amount": 3000,
+          "isIncome": false,
+          "description": "Магазин"
+        },
+        {
+          "id": 3,
+          "date": "2024-12-05T09:00:00",
+          "amount": 1000,
+          "isIncome": false,
+          "description": "Проездной"
+        },
+        {
+          "id": 2,
+          "date": "2024-12-01T18:00:00",
+          "amount": 5000,
+          "isIncome": false,
+          "description": "Кварплата"
+        },
+        {
+          "id": 1,
+          "date": "2024-12-01T15:00:00",
+          "amount": 27000,
+          "isIncome": true,
+          "description": "Зарплата"
+        }
+      ]
+    },
+    {
+      "id": 242,
+      "name": "Американский счёт",
+      "currency": "USD",
+      "openingBalance": 200,
+      "transactions": [
+        {
+          "id": 28,
+          "date": "2025-01-08T10:00:00",
+          "amount": 100,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 27,
+          "date": "2025-01-07T10:00:00",
+          "amount": 800,
+          "isIncome": true,
+          "description": "Поступление"
+        },
+        {
+          "id": 26,
+          "date": "2025-01-06T10:00:00",
+          "amount": 500,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 25,
+          "date": "2025-01-05T10:00:00",
+          "amount": 200,
+          "isIncome": true,
+          "description": "Поступление"
+        },
+        {
+          "id": 24,
+          "date": "2025-01-04T10:00:00",
+          "amount": 500,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 23,
+          "date": "2025-01-03T10:00:00",
+          "amount": 200,
+          "isIncome": true,
+          "description": "Поступление"
+        },
+        {
+          "id": 22,
+          "date": "2025-01-02T10:00:00",
+          "amount": 100,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 21,
+          "date": "2025-01-01T10:00:00",
+          "amount": 200,
+          "isIncome": true,
+          "description": "Поступление"
+        },
+        {
+          "id": 20,
+          "date": "2024-12-02T10:00:00",
+          "amount": 500,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 19,
+          "date": "2024-12-01T10:00:00",
+          "amount": 1000,
+          "isIncome": true,
+          "description": "Поступление"
+        }
+      ]
+    },
+    {
+      "id": 776,
+      "name": "Европейский счёт",
+      "currency": "EUR",
+      "openingBalance": 100,
+      "transactions": [
+        {
+          "id": 32,
+          "date": "2025-02-01T10:00:00",
+          "amount": 200,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 31,
+          "date": "2024-12-02T11:00:00",
+          "amount": 200,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 30,
+          "date": "2024-12-02T10:00:00",
+          "amount": 200,
+          "isIncome": false,
+          "description": "Списание"
+        },
+        {
+          "id": 29,
+          "date": "2024-12-01T10:00:00",
+          "amount": 500,
+          "isIncome": true,
+          "description": "Поступление"
+        }
+      ]
+    }
+  ]
+}
