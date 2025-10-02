@@ -20,6 +20,9 @@ namespace DigitalWallet
         /// </summary>
         private Wallet _selectedWallet;
 
+        /// <summary>
+        /// Результат последней выполненной операции.
+        /// </summary>
         private string _resultMessage;
 
         /// <summary>
