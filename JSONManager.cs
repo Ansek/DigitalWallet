@@ -69,8 +69,9 @@ namespace DigitalWallet
         /// Выполняет загрузку из файла.
         /// </summary>
         /// <param name="currencies">Список доступных валют.</param>
+        /// <param name="lastTransactionID">Для сохранения максимального идентификатора транзакции.</param>
         /// <returns>Список кошельков.</returns>
-        public List<Wallet> Load(IReadOnlyList<Currency> currencies)
+        public List<Wallet> Load(IReadOnlyList<Currency> currencies, ref ulong lastTransactionID)
         {
             List<Wallet> wallets = new List<Wallet>();
             if (File.Exists(FileName))
@@ -96,6 +97,8 @@ namespace DigitalWallet
                     foreach (var jsonTransaction in transactions.Reverse())
                     {
                         id = jsonTransaction["id"].GetValue<ulong>();
+                        if (lastTransactionID < id)
+                            lastTransactionID = id;
                         DateTime date = jsonTransaction["date"].GetValue<DateTime>();
                         double amount = jsonTransaction["amount"].GetValue<double>();
                         bool isIncome = jsonTransaction["isIncome"].GetValue<bool>();

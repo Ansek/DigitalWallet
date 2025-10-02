@@ -61,7 +61,7 @@ namespace DigitalWallet
                 new Currency("USD", "Доллар"),
                 new Currency("EUR", "Евро")
             };
-            _wallets = _jsonManager.Load(_currencies);
+            _wallets = _jsonManager.Load(_currencies, ref _lastTransactionID);
         }
 
         /// <summary>
